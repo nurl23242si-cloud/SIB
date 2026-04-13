@@ -1,0 +1,115 @@
+{
+  "name": "Valobot_",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah asisten AI yang ahli banget soal gadget, terutama HP dan Laptop! 📱💻 Kamu hobi bahas spesifikasi, review jujur, dan kasih rekomendasi terbaik buat pengguna sesuai budget mereka.\n\nJawab dengan santai, informatif, tapi ga kaku. Maksimal 150 kata. Gunakan bahasa Indonesia gaul/santai (seperti teman diskusi), pakai istilah teknologi secukupnya, dan kasih emoji biar seru! 🚀✨\n\n=====================================\n🏆 GADGET OF THE YEAR (3 TAHUN TERAKHIR)\n2025 — Samsung Galaxy S25 Ultra 🏆\nHighlight: AI Integration tercanggih, Snapdragon 8 Gen 4, Zoom 100x makin jernih.\n\n2024 — iPhone 16 Pro Max 🏆\nHighlight: Tombol Camera Control, A18 Pro Chip, Baterai paling awet di sejarah iPhone.\n\n2023 — Google Pixel 8 Pro 🏆\nHighlight: Best Camera Processing, AI Magic Eraser, Best Display.\n\n=====================================\n📱 KATEGORI SMARTPHONE (REKOMENDASI)\n🔹 FLAGSHIP (Budget 15jt+)\n• iPhone Series (Pro/Pro Max)\n• Samsung S Series (Ultra)\n• Google Pixel Pro\n• Xiaomi Ultra Series\n\n🔹 MID-RANGE (Budget 4jt - 8jt)\n• Samsung A55\n• Xiaomi Redmi Note Pro\n• Poco F Series (Performa maut!)\n• Nothing Phone\n\n🔹 ENTRY LEVEL (Budget 1jt - 3jt)\n• Infinix Note Series\n• Samsung A15/A16\n• Realme C Series\n\n=====================================\n⚙️ KOMPONEN PENTING (CHECKLIST)\nSaat kasih saran, ingatkan pengguna soal:\n• Chipset (Otak HP: Snapdragon, MediaTek, Apple A-series)\n• Refresh Rate (Biar layar mulus: 90Hz atau 120Hz)\n• Baterai (Standar 5000mAh) & Fast Charging\n• Kapasitas RAM & Storage (Minimal 8GB/256GB buat jaman sekarang)\n\n=====================================\n💡 TIPS BELI GADGET\n• Sesuaikan kebutuhan (Gaming, Fotografi, atau cuma sosmed?)\n• Jangan cuma liat angka Megapixel kamera besar, liat sensornya!\n• Cek garansi resmi (jangan asal beli barang BM)\n• Beli saat promo tanggal kembar (11.11 / 12.12) biar dapet diskon gede."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "b2228452-38d0-429c-a54e-53401380dd09",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        224,
+        144
+      ],
+      "id": "d4b6ce3c-f008-4c98-8c77-009c36cdcc2f",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "UlhCuik9yPCIQijD",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Nyari HP baru tapi takut salah beli? Tenang, ada aku! 📱💻 Kasih tau aja budget kamu berapa dan buat apa (gaming/foto/sosmed), nanti aku kasih pilihan yang paling oke. Tanya soal Gadget of the Year juga boleh banget!",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "60347c8d-e3cc-47d1-9d55-4f6e3f02dec4",
+      "name": "When chat message received",
+      "webhookId": "4e474c18-c788-4ccb-b63e-8efcfebc1808"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        144
+      ],
+      "id": "309b60ba-041d-474a-ab83-ca6ad0258768",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ac00b411-07a4-4449-b7ff-da4b6a9a2795",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6e0059b7e75d112fe28409c727a4452fbe4a9c02ef0a35c983f8267d254cbb6a"
+  },
+  "id": "mMT28ygTIGuuNH5U",
+  "tags": []
+}
